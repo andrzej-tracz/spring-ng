@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Polciy template</title>
+    <style type="text/css">
+
+        html, body {
+            font-family: "Open Sans", sans-serif;
+            color: #2b2e33;
+            font-weight: 300;
+            font-size: 100%;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 300;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin: 1rem 0;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin: 0.5rem 0;
+        }
+
+        h3 {
+            font-size: 1.35rem;
+            margin: 0.25rem 0;
+        }
+
+        h4 {
+            text-align: left;
+            font-size: 1.15rem;
+            font-weight: 400;
+            margin-bottom: .3rem;
+        }
+
+        section {
+            padding:  .5rem  1rem;
+        }
+
+        section table tr td,
+        section div {
+            font-size: 14px;
+        }
+
+        .bold, b {
+            font-weight: bold;
+        }
+
+        .left {
+            text-align: left;
+        }
+        .center {
+            text-align: center;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table tr td {
+            padding: .3rem .4rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            letter-spacing: 0.03em;
+        }
+
+        .header-table-wrap {
+            margin: 2rem 0 1rem;
+        }
+
+        sup {
+            font-size: .65rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <section>
+        <table>
+            <tr>
+                <td>
+                    <div class="logo">
+                        AGENCJA
+                    </div>
+                </td>
+                <td>
+                    <div class="right">
+                        {{ policy.getClosedAtFormated() }} <br />
+                        {{ owner.getCity() }} <br />
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </section>
+
+
+    <section>
+        <h1>Polisa ubezpieczenia</h1>
+        <h2>{{ policy.getSubject() }}</h2>
+    </section>
+
+    <section>
+        <div class="header-table-wrap">
+            <table>
+                <tr>
+                    <td>
+                        <h4>Dane właściciela</h4>
+                        {% if(customer.getIsCompany()) %}
+                        <div>{{ customer.getCompanyName() }}</div>
+                        {% endif %}
+                        <div>{{ customer.getName() }} {{ customer.getSurname() }}</div>
+                        <div>{{ customer.getAddress() }}</div>
+                        <div>{{ customer.getCity() }}</div>
+                        <div>{{ customer.getPhone() }}</div>
+                        <div>{{ customer.getEmail() }}</div>
+
+                    </td>
+
+                    <td class="right">
+                        <h4 class="right">Dane ubezpieczyciela</h4>
+                        {% if(owner.getCompanyName()) %}
+                            <div>{{ owner.getCompanyName() }}</div>
+                        {% endif %}
+                        <div>{{ owner.getName() }} {{ owner.getSurname() }}</div>
+                        <div>{{ owner.getAddress() }}</div>
+                        <div>{{ owner.getCity() }}</div>
+                        <div>{{ owner.getPhone() }}</div>
+                        <div>{{ owner.getEmail() }}</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <section>
+        <h4>Ważność ubezpieczenia</h4>
+
+        <table>
+            <tr>
+                <td>
+                    Od dnia: <b>{{ policy.getStartAtFormated() }}</b>
+                </td>
+                <td>
+                    Do dnia: <b>{{ policy.getEndsAtFormated() }}</b>
+                </td>
+            </tr>
+        </table>
+    </section>
+
+
+    <section>
+        <h4>Przedmiot ubezpieczenia</h4>
+        <div>
+            <b>{{ policy.getSubject() }}</b>
+        </div>
+        <div>
+            {{ policy.getSubjectInfo() }}
+        </div>
+        <div>
+            {{ policy.getSubjectDetails() }}
+        </div>
+    </section>
+
+
+    <section>
+        <h4>Informacje dodatkowe</h4>
+        <div>
+            {{ policy.getDescription() }}
+        </div>
+    </section>
+
+
+    <section>
+        <h4>Szczegóły oferty</h4>
+        <table>
+            <tr>
+                <td>Nazwa</td>
+                <td>
+                    {{ policy.getProduct().getName() }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                   Opis
+                </td>
+                <td>
+                    {{ policy.getProduct().getDescription() }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Płatność
+                </td>
+                <td>
+                    {{ policy.getProductVariant().getName() }}
+                    {{ policy.getProductVariant().getPrice() }}
+                </td>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <br/>
+        <br/>
+        <table>
+            <tr>
+                <td>
+                    ......................................................... <br/>
+                    <sup>(data i podpis ubezpieczonego)</sup>
+                </td>
+                <td class="right">
+                    ......................................................... <br/>
+                    <sup>(data i podpis ubezpieczyciela)</sup>
+                </td>
+            </tr>
+        </table>
+    </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,7 @@
+application.yml
+storage
+.idea
+target
+data
+./data
+docker-compose.yml
