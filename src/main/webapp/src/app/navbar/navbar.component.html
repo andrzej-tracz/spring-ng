@@ -1,0 +1,19 @@
+<nav class="navbar">
+
+  <div class="logo">
+    <div class="logo-wrapper">
+      <h4>Agencja</h4>
+    </div>
+  </div>
+
+  <div class="menu">
+    <div class="user-panel" (click)="toggleExpand()">
+      <img src="/assets/avatar.svg" />
+
+      <ul *ngIf="isExpanded" class="user-actions">
+        <li><i class="fa fa-user"></i> {{ user.email }}</li>
+        <li (click)="logout()"><i class="fa fa-sign-out"></i> Wyloguj</li>
+      </ul>
+    </div>
+  </div>
+</nav>

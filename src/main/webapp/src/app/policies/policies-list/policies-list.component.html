@@ -1,0 +1,91 @@
+<div class="row">
+  <div class="column">
+    <div class="title-wrapper">
+      <h1>Polisy</h1>
+      <ul class="breadcrumbs">
+        <li><a routerLink="/">Home</a></li>
+        <li><span>Polisy</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="column">
+    <button class="button small" routerLink="/policies/create/"><i class="fa fa-plus"></i> Dodaj polisę</button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="column">
+    <div class="product-list-component">
+      <div *ngIf="!isLoaded">
+        <div class="loading"></div>
+      </div>
+      <div *ngIf="isLoaded && policies.length">
+        <div class="table-view-wrapper">
+          <div class="row table-view header">
+            <div class="small-11 columns">
+              <div class="row">
+                <div class="small-4 columns">
+                  Nazwa
+                </div>
+                <div class="small-2 columns">
+                  Klient
+                </div>
+                <div class="small-2 columns">
+                  Właściciel
+                </div>
+                <div class="small-2 columns text-center">
+                  Status
+                </div>
+                <div class="small-2 columns text-center">
+                  Dodana
+                </div>
+              </div>
+            </div>
+
+            <div class="small-1 columns">
+            </div>
+
+          </div>
+          <div *ngFor="let policy of policies">
+            <div class="row table-view body" >
+
+              <div class="small-11 columns" routerLink="/policies/edit/{{ policy.id }}">
+                <div class="row">
+                  <div class="small-4 columns">{{ policy.name || '-' }}</div>
+                  <div class="small-2 columns">
+                    {{ policy.customer.name }} {{ policy.customer.surname }}
+                  </div>
+                  <div class="small-2 columns">
+                    {{ policy.user.getFullName() }}
+                  </div>
+                  <div class="small-2 columns status-wrapper text-center">
+                    <span class="status-label" [ngClass]="policyStatusClass(policy)">
+                      <span *ngIf="policy.isClosed()" class="fa fa-check"></span>
+                      <span *ngIf="!policy.isClosed()" class="fa fa-edit"></span>
+                    </span>
+                  </div>
+                  <div class="small-2 columns text-center">
+                    {{ policy.createdAt | date: 'dd-MM-yyyy' || '-' }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="small-1 columns">
+                <div class="row">
+                  <div class="small-12 columns text-right trash-wrapper">
+                    <button *ngIf="!policy.isClosed()" (click)="deletePolicy(policy)"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

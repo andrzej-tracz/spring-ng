@@ -1,0 +1,51 @@
+@import "../../styles/global";
+
+.sidebar-wrapper {
+  position: fixed;
+  width: 200px;
+  top: 4rem;
+  left: 0;
+  bottom: 0;
+  background-color: $white;
+  border-right: 1px solid $medium-gray;
+}
+
+.navigation {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  & li {
+    & a {
+      display: inline-block;
+      width: 100%;
+      padding: 1.25rem 1rem;
+      color: $blue-zodiac;
+      border-left: 3px solid transparent;
+      line-height: 1rem;
+      font-weight: 300;
+
+      & span {
+        line-height: 1rem;
+      }
+
+      & .fa {
+        width: 20px;
+        margin-right: .25rem;
+      }
+
+      &.active {
+        border-left: 3px solid $primary-color;
+        color: $primary-color;
+      }
+    }
+  }
+}
+.copyright {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  font-size: 12px;
+  text-align: center;
+}

@@ -1,0 +1,84 @@
+<div class="row">
+  <div class="column">
+    <div class="title-wrapper">
+      <h1>Klienci</h1>
+      <ul class="breadcrumbs">
+        <li><a routerLink="/">Home</a></li>
+        <li><span>Klienci</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="column">
+    <button class="button small" routerLink="/customers/create/"><i class="fa fa-user-plus"></i> Dodaj klienta</button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="column">
+    <div class="product-list-component">
+      <div *ngIf="!customers && !isLoaded">
+        <div class="loading"></div>
+      </div>
+      <div *ngIf="isLoaded && customers && ! customers.length">
+        <h3>Nie dodano żadnego Klienta.</h3>
+      </div>
+      <div *ngIf="customers && customers.length">
+        <div class="table-view-wrapper">
+          <div class="row table-view header">
+            <div class="small-11 columns">
+              <div class="row">
+                <div class="small-1 columns">
+                  #
+                </div>
+                <div class="small-4 columns">
+                  Klient
+                </div>
+                <div class="small-2 columns">
+                  Email
+                </div>
+                <div class="small-2 columns text-center">
+                  Status
+                </div>
+                <div class="small-2 columns text-center">
+                  Dodany
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngFor="let customer of customers; let i = index">
+            <div class="row table-view body" >
+              <div class="small-11 columns" routerLink="/customers/edit/{{ customer.id }}">
+                <div class="row">
+                  <div class="small-1 columns">
+                    {{ i + 1 }}
+                  </div>
+                  <div class="small-4 columns">{{ customer.getFullName() ||  '-' }}</div>
+                  <div class="small-2 columns">
+                    {{ customer.email || '-' }}
+                  </div>
+                  <div class="small-2 columns text-center">
+                    {{ customer.getStatus() }}
+                  </div>
+                  <div class="small-2 columns text-center">
+                    {{ customer.createdAt | date: 'dd-MM-yyyy' || '-' }}
+                  </div>
+                </div>
+              </div>
+              <div class="small-1 columns">
+                <div class="row">
+                  <div class="small-12 columns text-right trash-wrapper">
+                    <button (click)="deleteCustomer(customer)"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

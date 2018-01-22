@@ -1,0 +1,93 @@
+<div class="row">
+  <div class="column">
+    <div class="title-wrapper">
+      <h1>Produkty</h1>
+      <ul class="breadcrumbs">
+        <li><a routerLink="/">Home</a></li>
+        <li><span>Produkty</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="column">
+    <button class="button small" routerLink="/products/create/"><i class="fa fa-plus"></i> Dodaj produkt</button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="column">
+    <div class="product-list-component">
+      <div *ngIf="!isLoaded">
+        <div class="loading"></div>
+      </div>
+      <div *ngIf="isLoaded && products.length">
+        <div class="table-view-wrapper">
+          <div class="row table-view header">
+            <div class="small-11 columns">
+              <div class="row">
+                <div class="small-1 columns">
+                  #
+                </div>
+                <div class="small-4 columns">
+                  Nazwa
+                </div>
+                <div class="small-3 columns">
+                  Opis
+                </div>
+                <div class="small-2 columns text-center">
+                  Dostępność
+                </div>
+                <div class="small-2 columns text-center">
+                  Dodany
+                </div>
+              </div>
+            </div>
+
+            <div class="small-1 columns">
+            </div>
+
+          </div>
+          <div *ngFor="let product of products; let i = index">
+            <div class="row table-view body" >
+
+              <div class="small-11 columns" routerLink="/products/edit/{{ product.id }}">
+                <div class="row">
+                  <div class="small-1 columns">
+                    {{ i + 1 }}
+                  </div>
+                  <div class="small-4 columns">{{ product.name || '-' }}</div>
+                  <div class="small-3 columns">
+                    {{ product.description || '-' }}
+                  </div>
+                  <div class="small-2 columns status-wrapper text-center">
+                    <div class="status-label closed" *ngIf="product.isActive">
+                      <span class="fa fa-check"></span>
+                    </div>
+                    <div class="status-label draft" *ngIf="!product.isActive">
+                      <span class="fa fa-times"></span>
+                    </div>
+                  </div>
+                  <div class="small-2 columns text-center">
+                    {{ product.createdAt | date: 'dd-MM-yyyy' || '-' }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="small-1 columns">
+                <div class="row">
+                  <div class="small-12 columns text-right trash-wrapper">
+                    <button (click)="deleteProduct(product)"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

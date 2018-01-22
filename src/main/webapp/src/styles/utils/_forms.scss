@@ -1,0 +1,76 @@
+@import "../global";
+
+label {
+  vertical-align: middle;
+}
+
+.help-text {
+  font-weight: 300;
+}
+
+.field-error-notice {
+  font-size: 0.9em;
+  color: $alert-color;
+  float: right;
+}
+
+.datepicker-input {
+  padding: .5rem;
+  height: 2.4375rem;
+  margin-bottom: 1rem;
+  border: 1px solid $geyser;
+  border-radius: 0;
+  background-color: #FEFEFE;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 300;
+  color: $blue-zodiac;
+}
+
+select {
+  font-weight: 300;
+  outline: 0 none;
+}
+
+.form-wrapper {
+
+  padding-top: $global-margin;
+  padding-bottom: $global-margin;
+
+  & .row {
+    margin-bottom: 0;
+  }
+
+}
+
+textarea {
+  min-height: 200px;
+}
+
+input[type=checkbox],
+input[type=radio] {
+  margin: 3px 0;
+}
+
+.ui-switch-wrapper {
+  margin-bottom: 1rem;
+}
+
+ui-switch {
+  & span {
+    top: 3px;
+  }
+}
+
+ui-switch + label {
+  display: inline-block;
+  line-height: 22px;
+  vertical-align: middle;
+}
+
+
+.readonly-label {
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+  padding: .5rem;
+}

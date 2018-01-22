@@ -1,0 +1,40 @@
+<div *ngIf="!isLoaded">
+  <div class="loading"></div>
+</div>
+<div *ngIf="isLoaded">
+  <div class="row">
+    <div class="column">
+      <div class="title-wrapper">
+        <h1>Dane Właściciela</h1>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="column">
+      <button class="button small" (click)="goBack()"><i class="fa fa-arrow-left"></i> Wróć</button>
+    </div>
+  </div>
+</div>
+
+<div class="row form-wrapper">
+  <div class="small-12 medium-8 large-6 columns">
+
+    <app-text-field [label]="'Nazwa Firmy'" [(ngModel)]="owner.companyName"></app-text-field>
+    <app-text-field [label]="'Numer VAT'" [(ngModel)]="owner.vatNumber"></app-text-field>
+    <app-text-field [label]="'Imie'" [(ngModel)]="owner.name"></app-text-field>
+    <app-text-field [label]="'Nazwisko'" [(ngModel)]="owner.surname"></app-text-field>
+    <app-text-field [label]="'Email'" [(ngModel)]="owner.email"></app-text-field>
+    <app-text-field [label]="'Adres'" [(ngModel)]="owner.address"></app-text-field>
+    <app-text-field [label]="'Miasto'" [(ngModel)]="owner.city"></app-text-field>
+    <app-text-field [label]="'Telefon kontaktowy'" [(ngModel)]="owner.phone"></app-text-field>
+
+
+    <div class="row">
+      <div class="columns text-right">
+        <button class="button small" (click)="saveOwnerData()">
+          <span><i class="fa fa-save"></i> Zapisz</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+@import '../global';
+
+ng-select {
+  position: relative;
+
+  & input.ui-select-search {
+    margin: 0;
+  }
+
+  &[ng-reflect-disabled="true"] {
+    cursor: default;
+  }
+
+  & ul {
+    margin: 0;
+    background-color: $white;
+    border: 1px solid $athens-gray;
+    border-top: 0;
+
+    & li {
+
+      & .ui-select-choices-row {
+
+        & > a {
+
+        }
+
+        &.active {
+          & > a {
+            background-color: $primary-color !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+.ui-select-placeholder,
+.ui-select-match-text {
+  width: 100%;
+  line-height: 2.4375rem;
+  margin-bottom: 1rem;
+  padding: 0 1rem 0 .5rem;
+  font-weight: 400;
+}
+
+.ui-select-placeholder {
+  font-weight: 400;
+}
+
+ng-select:not([ng-reflect-disabled="true"]) {
+  & .ui-select-placeholder,
+  & .ui-select-match-text {
+    cursor: pointer;
+  }
+}

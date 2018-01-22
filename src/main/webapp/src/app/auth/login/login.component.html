@@ -1,0 +1,30 @@
+<div class="login-wrapper">
+  <div class="row">
+    <div class="columns login-form-wrapper">
+      <h3>Witaj, Zaloguj się aby rozpocząć</h3>
+      <div class="form-wrapper">
+        <form action="" *ngIf="!isLoginPending">
+          <div class="row">
+            <div class="column input-wrapper">
+              <input #login placeholder="Login" type="text" value="{{ rememberedLogin }}">
+            </div>
+          </div>
+          <div class="row">
+            <div class="column input-wrapper">
+              <input #password placeholder="Password" type="password">
+            </div>
+          </div>
+          <div class="row align-right">
+            <div class="column text-right">
+              <button class="button small" (click)="tryLogin(login.value, password.value)">Login</button>
+            </div>
+          </div>
+        </form>
+        <div class="loading small" *ngIf="isLoginPending">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<toaster-container></toaster-container>

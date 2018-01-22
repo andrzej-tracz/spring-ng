@@ -1,0 +1,203 @@
+<div *ngIf="!isLoaded">
+  <div class="loading"></div>
+</div>
+<div *ngIf="isLoaded">
+  <div class="row">
+    <div class="column">
+      <div class="title-wrapper">
+        <h1 *ngIf="customer && customer.id">Edycja Klienta</h1>
+        <h1 *ngIf="customer && !customer.id">Dodawanie Nowego Klienta</h1>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="column">
+      <button class="button small" routerLink="/customers"><i class="fa fa-arrow-left"></i> Wróć</button>
+    </div>
+  </div>
+
+  <div class="row form-wrapper" *ngIf="customer">
+
+    <div class="small-12 medium-8 large-6 columns">
+
+      <div class="row">
+        <div class="column ui-switch-wrapper">
+          <ui-switch size="small" [(ngModel)]="customer.isCompany"></ui-switch>
+          <label class="help-text">
+            Czy reprezentuje Firme?
+          </label>
+        </div>
+      </div>
+
+      <div *ngIf="customer.isCompany">
+        <div class="row">
+          <div class="column">
+            <div class="row">
+              <div class="column">
+                <label class="help-text">
+                  Nazwa Firmy
+                </label>
+                <input type="text" [(ngModel)]="customer.companyName"/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="column">
+            <div class="row">
+              <div class="column">
+                <label class="help-text">
+                  Number VAT
+                </label>
+                <input type="text" [(ngModel)]="customer.vatNumber"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column">
+          <div class="row">
+            <div class="column">
+              <div class="row">
+                <div class="small-12 medium-6 column">
+                  <label class="help-text">
+                    Imie
+                    <input [(ngModel)]="customer.name" type="text">
+                  </label>
+                </div>
+                <div class="small-12 medium-6 column">
+                  <label class="help-text">
+                    Nazwisko
+                  </label>
+                  <input [(ngModel)]="customer.surname" type="text">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column">
+          <div class="row">
+            <div class="column">
+              <div class="row">
+                <div class="small-12 medium-6 column">
+                  <label class="help-text">
+                    Email
+                    <span class="field-error-notice" *ngIf="field.errors?.email">
+                   Ups.. to nie jest poprawy email...
+                  </span>
+                    <input [(ngModel)]="customer.email" type="text" #field="ngModel" [email]>
+                  </label>
+                </div>
+                <div class="small-12 medium-6 column">
+                  <label class="help-text">
+                    Status
+                    <select [(ngModel)]="customer.isActive">
+                      <option value="false">Nieaktywny</option>
+                      <option value="true">Aktywny</option>
+                    </select>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column">
+          <div class="row">
+            <div class="column">
+              <label class="help-text">
+                Adress
+              </label>
+              <input type="text" [(ngModel)]="customer.address"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column">
+          <div class="row">
+            <div class="column">
+              <label class="help-text">
+                Miasto
+              </label>
+              <input type="text" [(ngModel)]="customer.city"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column">
+          <div class="row">
+            <div class="column">
+              <label class="help-text">
+                Wprowadz telefon kontaktowy
+                <span class="field-error-notice" *ngIf="phone.errors?.phone">
+                To raczej nie jest poprawy numer telefonu...
+              </span>
+              </label>
+              <input type="text" [(ngModel)]="customer.phone" #phone="ngModel" phone="NC"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column large-4">
+          <div class="row">
+            <div class="column">
+              <label class="help-text">
+                Data urodzenia
+              </label>
+              <ng2-datepicker required [options]="datepickerOptions"
+                              [(ngModel)]="customer.bornDatePicker"></ng2-datepicker>
+            </div>
+          </div>
+        </div>
+        <div class="column large-4">
+          <div class="row">
+            <div class="column">
+              <label class="help-text">
+                Data uzyskania prawa jazdy
+              </label>
+              <ng2-datepicker required [options]="datepickerOptions"
+                              [(ngModel)]="customer.drivingLicenseDatePicker">
+              </ng2-datepicker>
+            </div>
+          </div>
+        </div>
+        <div class="column large-4">
+          <div class="row">
+            <div class="column">
+              <label class="help-text">
+                Data pierwszej polisy
+              </label>
+              <ng2-datepicker required [options]="datepickerOptions"
+                              [(ngModel)]="customer.firstPoliceDatePicker">
+              </ng2-datepicker>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="columns text-right">
+          <button class="button small" (click)="saveCustomer()">
+            <span *ngIf="customer.id"><i class="fa fa-save"></i> Zapisz</span>
+            <span *ngIf="!customer.id"><i class="fa fa-user-plus"></i> Dodaj</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

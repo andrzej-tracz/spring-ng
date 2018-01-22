@@ -1,0 +1,111 @@
+<div *ngIf="!isLoaded">
+  <div class="loading"></div>
+</div>
+<div *ngIf="isLoaded">
+
+  <div class="row">
+    <div class="column">
+      <div class="title-wrapper">
+        <h1 *ngIf="product && product.id">Edycja produktu</h1>
+        <h1 *ngIf="product && !product.id">Dodawanie Nowego Produktu</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="column">
+      <button class="button small" routerLink="/products"><i class="fa fa-arrow-left"></i> Wróć</button>
+    </div>
+  </div>
+
+  <div class="row form-wrapper" *ngIf="product">
+
+    <div class="small-12 medium-8 columns">
+
+      <div class="row">
+        <div class="column ui-switch-wrapper">
+          <ui-switch size="small" [(ngModel)]="product.isActive"></ui-switch>
+          <label class="help-text">
+            Pozwól na tworzenie zamówień z tym produktem
+          </label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column">
+          <div class="row">
+            <div class="column">
+              <label class="help-text">
+                Wprowadź nazwę produktu.
+                <input [(ngModel)]="product.name" type="text">
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column">
+          <div class="row">
+            <div class="column">
+              <label class="help-text">
+                Wprowadź krótki opis produktu
+                <textarea [(ngModel)]="product.description" ></textarea>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="columns">
+          <h6>
+            Warianty Produktu
+            <a class="button small" (click)="addProductVariant()">
+              <span><i class="fa fa-plus"></i></span>
+            </a>
+          </h6>
+        </div>
+      </div>
+
+      <div class="row" *ngFor="let variant of product.variants; let i = index">
+        <div class="columns">
+          <label class="help-text">
+            Nazwa
+            <input [(ngModel)]="variant.name" type="text">
+          </label>
+        </div>
+        <div class="columns">
+          <label class="help-text">
+            Cena (zł)
+            <span class="field-error-notice" *ngIf="field.errors?.min && !field.errors?.number">
+                Wartość nie może być mnmiejsza od 0...
+            </span>
+            <span class="field-error-notice" *ngIf="field.errors?.number">
+                Podana cena nie jest prawidłowa
+            </span>
+            <input [(ngModel)]="variant.price" type="text" #field="ngModel" [min]="0" number>
+          </label>
+        </div>
+        <div class="columns">
+          <label class="help-text">
+            &nbsp;
+          </label>
+          <button *ngIf="i > 0" class="button small" (click)="removeProductVariant(variant)"><span class="fa fa-times"></span></button>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="columns text-right">
+          <button class="button small" (click)="saveProduct()">
+            <span *ngIf="product.id"><i class="fa fa-save"></i> Zapisz</span>
+            <span *ngIf="!product.id"><i class="fa fa-database"></i> Dodaj</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

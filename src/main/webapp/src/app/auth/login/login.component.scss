@@ -1,0 +1,25 @@
+@import "../../../styles/global";
+
+.login-wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  & > .row {
+    width: 100%;
+    transform: translateY(-20%);
+  }
+}
+
+.login-form-wrapper {
+  display: flex;;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 2rem;
+  border: 1px solid $medium-gray;
+  background-color: $light-gray
+}

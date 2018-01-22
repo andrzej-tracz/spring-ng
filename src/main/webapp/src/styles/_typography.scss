@@ -1,0 +1,32 @@
+$fa-font-path:        "~font-awesome/fonts" !default;
+$fa-font-size-base:   1rem !default;
+$fa-line-height-base: 1 !default;
+$fa-css-prefix:       fa !default;
+$fa-border-color:     #eee !default;
+$fa-inverse:          #fff !default;
+$fa-li-width:         2em !default;
+
+@import "~font-awesome/scss/font-awesome";
+
+
+@font-face {
+  font-family: 'Lato';
+  src: url('../fonts/Lato-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('../fonts/Lato-Medium.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('../fonts/Lato-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+

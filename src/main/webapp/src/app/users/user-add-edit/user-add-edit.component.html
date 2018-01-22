@@ -1,0 +1,115 @@
+<div *ngIf="!isLoaded">
+  <div class="loading"></div>
+</div>
+<div *ngIf="isLoaded">
+
+  <div class="row">
+    <div class="column">
+      <div class="title-wrapper">
+        <h1 *ngIf="user && user.id">Edycja Użytkownika</h1>
+        <h1 *ngIf="user && !user.id">Dodawanie Nowego Użytkownika</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="column">
+      <button class="button small" routerLink="/users"><i class="fa fa-arrow-left"></i> Wróć</button>
+    </div>
+  </div>
+
+  <div class="row form-wrapper" *ngIf="user">
+
+    <div class="small-12 medium-8 large-6 columns">
+
+      <div class="row">
+        <div class="column">
+          <div class="row">
+            <div class="column">
+              <label class="help-text">
+                Wprowadź nickname użytkownika.
+                <input [(ngModel)]="user.username" type="text">
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="!user.id">
+        <div class="column">
+          <div class="row">
+            <div class="column">
+              <label class="help-text">
+                Wprowadź hasło użytkownika.
+                <input [(ngModel)]="user.password" type="text">
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column">
+          <div class="row">
+            <div class="column">
+              <div class="row">
+                <div class="small-12 medium-6 column">
+                  <label class="help-text">
+                    Imie
+                    <input [(ngModel)]="user.name" type="text">
+                  </label>
+                </div>
+                <div class="small-12 medium-6 column">
+                  <label class="help-text">
+                    Nazwisko
+
+                    <input [(ngModel)]="user.surname" type="text">
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column">
+          <div class="row">
+            <div class="column">
+              <div class="row">
+                <div class="small-12 medium-6 column">
+                  <label class="help-text">
+                    Email
+                    <input [(ngModel)]="user.email" type="text">
+                  </label>
+                </div>
+
+                <div class="small-12 medium-6 column">
+                  <label class="help-text">
+                    Status
+                    <select [(ngModel)]="user.isActive">
+                      <option value="false">Nieaktywny</option>
+                      <option value="true">Aktywny</option>
+                    </select>
+                  </label>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="columns text-right">
+          <button class="button small" (click)="saveUser()">
+            <span *ngIf="user.id"><i class="fa fa-save"></i> Zapisz</span>
+            <span *ngIf="!user.id"><i class="fa fa-user-plus"></i> Dodaj</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
