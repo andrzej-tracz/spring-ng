@@ -12,8 +12,7 @@ export class ApiService {
 
   @Output() unauthorizedRequest: EventEmitter<any> = new EventEmitter();
 
-  constructor(private http: Http, private notifications: NotificationService) {
-  }
+  constructor(private http: Http, private notifications: NotificationService) {}
 
   private getHeaders() {
     const headers = new Headers();

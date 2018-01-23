@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductsListComponent } from './products-list/products-list.component';
-import {RouterModule} from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { ProductAddEditComponent } from './product-add-edit/product-add-edit.component';
-import {ProductService} from './product.service';
-import {SharedModule} from '../shared/shared.module';
+import { ProductService } from './product.service';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -21,4 +21,5 @@ import {SharedModule} from '../shared/shared.module';
     ProductService
   ],
 })
-export class ProductsModule { }
+export class ProductsModule {
+}

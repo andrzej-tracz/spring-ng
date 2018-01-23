@@ -1,0 +1,109 @@
+<div *ngIf="!isLoaded">
+  <div class="loading"></div>
+</div>
+<div *ngIf="isLoaded">
+
+  <div class="row">
+    <div class="column">
+      <div class="title-wrapper">
+        <h1 *ngIf="category && category.id">Edycja kateogrii</h1>
+        <h1 *ngIf="category && !category.id">Dodawanie Nowej Kategorii</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="column">
+      <button class="button small" routerLink="/product-categories"><i class="fa fa-arrow-left"></i> Wróć</button>
+    </div>
+  </div>
+
+  <div class="row form-wrapper" *ngIf="category">
+
+    <div class="small-12 medium-8 columns">
+
+      <div class="row">
+        <div class="column">
+          <div class="row">
+            <div class="column">
+              <label class="help-text">
+                Wprowadź nazwę kategori.
+                <input [(ngModel)]="category.name" type="text">
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column">
+          <div class="row attributes">
+            <div class="column">
+              <h3>Atrybuty kategorii</h3>
+            </div>
+            <div class="column">
+              <button class="button small" (click)="addCategoryAttribute()"><i class="fa fa-plus"></i> Dodaj</button>
+            </div>
+          </div>
+
+        <div class="attribute-row" *ngFor="let attribute of category.attributes; let i = index">
+
+          <div class="row">
+            <div class="column small-4">
+              <label class="help-text">
+                <ui-switch size="small" [(ngModel)]="attribute.shouldChangePrice"></ui-switch>
+                Modyfikuję cenę produktu?
+              </label>
+            </div>
+            <div class="column">
+              <label class="help-text">
+                Wprowadź nazwę atrybutu.
+                <input [(ngModel)]="attribute.name" type="text">
+              </label>
+            </div>
+            <div class="column small-2">
+              <button class="button small" (click)="removeCategoryAttribute(i)"><i class="fa fa-minus"></i></button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="columns"><span>Dozwolone wartości</span><button class="button small" (click)="addAttributeAllowedValue(attribute)"><i class="fa fa-plus"></i></button></div>
+          </div>
+
+          <div class="row" *ngFor="let value of attribute.availableValues; let k = index">
+            <div class="columns">
+              <label class="help-text">
+                Wprowadź nazwę
+                <input [(ngModel)]="value.name" type="text">
+              </label>
+            </div>
+            <div class="columns" *ngIf="attribute.shouldChangePrice">
+              <label class="help-text">
+                Wprowadź wartość
+                <input [(ngModel)]="value.amount" type="number">
+              </label>
+            </div>
+            <div class="columns small-2">
+              <button class="button small" (click)="removeAttributeValue(attribute, k)"><i class="fa fa-minus"></i></button>
+            </div>
+          </div>
+
+        </div>
+
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="columns text-right">
+          <button class="button small" (click)="saveCategory()">
+            <span *ngIf="category.id"><i class="fa fa-save"></i> Zapisz</span>
+            <span *ngIf="!category.id"><i class="fa fa-database"></i> Dodaj</span>
+          </button>
+        </div>
+      </div>
+
+      </div>
+    </div>
+
+  </div>

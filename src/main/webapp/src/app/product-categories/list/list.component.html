@@ -1,0 +1,70 @@
+<div class="row">
+  <div class="column">
+    <div class="title-wrapper">
+      <h1>Kategorie</h1>
+      <ul class="breadcrumbs">
+        <li><a routerLink="/">Home</a></li>
+        <li><span>Kategorie</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="column">
+    <button class="button small" routerLink="/product-categories/create/"><i class="fa fa-plus"></i> Dodaj Kategorie</button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="column">
+    <div class="product-list-component">
+      <div *ngIf="!isLoaded">
+        <div class="loading"></div>
+      </div>
+      <div *ngIf="isLoaded && categories.length">
+        <div class="table-view-wrapper">
+          <div class="row table-view header">
+            <div class="small-11 columns">
+              <div class="row">
+                <div class="small-1 columns">
+                  #
+                </div>
+                <div class="small-4 columns">
+                  Nazwa
+                </div>
+              </div>
+            </div>
+
+            <div class="small-1 columns">
+            </div>
+
+          </div>
+          <div *ngFor="let category of categories; let i = index">
+            <div class="row table-view body" >
+
+              <div class="small-11 columns" routerLink="/product-categories/edit/{{ category.id }}">
+                <div class="row">
+                  <div class="small-1 columns">
+                    {{ i + 1 }}
+                  </div>
+                  <div class="small-4 columns">{{ category.name || '-' }}</div>
+                </div>
+              </div>
+
+              <div class="small-1 columns">
+                <div class="row">
+                  <div class="small-12 columns text-right trash-wrapper">
+                    <button (click)="deleteProductCategory(category)"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

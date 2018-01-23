@@ -1,0 +1,17 @@
+@import "../../../styles/global";
+
+.attributes {
+  flex-flow: row nowrap;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.attribute-row {
+  margin-bottom: 16px;
+  border-bottom: 1px dashed $dark-gray;
+
+  .row {
+    flex-flow: row nowrap;
+    align-items: center;
+  }
+}

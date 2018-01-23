@@ -26,6 +26,7 @@ const routes: Routes = [
       {path: '', component: DashboardComponent},
       {path: 'customers', loadChildren: './customers/customers.module#CustomersModule'},
       {path: 'products', loadChildren: './products/products.module#ProductsModule'},
+      {path: 'product-categories', loadChildren: './product-categories/product-categories.module#ProductCategoriesModule'},
       {path: 'policies', loadChildren: './policies/policies.module#PoliciesModule'},
       {path: 'payments', loadChildren: './payments/payments.module#PaymentsModule'},
       {path: 'invoices', loadChildren: './invoices/invoices.module#InvoicesModule'},
