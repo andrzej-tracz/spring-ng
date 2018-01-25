@@ -1,4 +1,5 @@
 import {ProductVariant} from './product-variant';
+import { ProductCategory } from '../product-categories/product-category';
 export class Product {
 
   id: number;
@@ -10,6 +11,8 @@ export class Product {
   pricePerYear: number;
   isActive: boolean;
   variants: Array<ProductVariant> = [];
+
+  category: ProductCategory = null;
 
   createdAt: Date = null;
   updatedAt: Date = null;

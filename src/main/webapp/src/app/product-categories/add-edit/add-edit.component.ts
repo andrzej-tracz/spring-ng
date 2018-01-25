@@ -62,7 +62,7 @@ export class AddEditComponent implements OnInit {
   }
 
   addCategoryAttribute() {
-    this.category.attributes.push(new ProductCategoryAttribute());
+    this.category.attributes.unshift(new ProductCategoryAttribute());
   }
 
   fetchCategory(id: string) {

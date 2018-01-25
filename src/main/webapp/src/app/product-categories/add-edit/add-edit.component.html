@@ -49,16 +49,16 @@
         <div class="attribute-row" *ngFor="let attribute of category.attributes; let i = index">
 
           <div class="row">
-            <div class="column small-4">
-              <label class="help-text">
-                <ui-switch size="small" [(ngModel)]="attribute.shouldChangePrice"></ui-switch>
-                Modyfikuję cenę produktu?
-              </label>
-            </div>
             <div class="column">
               <label class="help-text">
                 Wprowadź nazwę atrybutu.
                 <input [(ngModel)]="attribute.name" type="text">
+              </label>
+            </div>
+            <div class="column small-4">
+              <label class="help-text">
+                <ui-switch size="small" [(ngModel)]="attribute.shouldChangePrice"></ui-switch>
+                Modyfikuję cenę produktu?
               </label>
             </div>
             <div class="column small-2">
@@ -66,8 +66,13 @@
             </div>
           </div>
 
-          <div class="row">
-            <div class="columns"><span>Dozwolone wartości</span><button class="button small" (click)="addAttributeAllowedValue(attribute)"><i class="fa fa-plus"></i></button></div>
+          <div class="row collapse allowed-values-wrapper">
+            <div class="columns small-3">
+              <span>Dozwolone wartości</span>
+            </div>
+            <div class="columns">
+              <button class="button small" (click)="addAttributeAllowedValue(attribute)"><i class="fa fa-plus"></i> Dodaj wartość</button>
+            </div>
           </div>
 
           <div class="row" *ngFor="let value of attribute.availableValues; let k = index">
@@ -79,7 +84,7 @@
             </div>
             <div class="columns" *ngIf="attribute.shouldChangePrice">
               <label class="help-text">
-                Wprowadź wartość
+                Wprowadź wartość w %
                 <input [(ngModel)]="value.amount" type="number">
               </label>
             </div>

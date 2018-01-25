@@ -9,9 +9,14 @@
 .attribute-row {
   margin-bottom: 16px;
   border-bottom: 1px dashed $dark-gray;
+  padding: 1rem 0;
 
   .row {
     flex-flow: row nowrap;
     align-items: center;
   }
+}
+
+.allowed-values-wrapper {
+  margin: .5rem 0;
 }

@@ -17,17 +17,26 @@ import java.util.Map;
 @RequestMapping("/api/dashboard")
 public class DashboardController {
 
-    @Autowired
-    private CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
+
+    private final PoliciesRepository policiesRepository;
+
+    private final PolicyService policiesService;
+
+    private final ProductRepository productRepository;
 
     @Autowired
-    private PoliciesRepository policiesRepository;
-
-    @Autowired
-    private PolicyService policiesService;
-
-    @Autowired
-    private ProductRepository productRepository;
+    public DashboardController(
+            PolicyService policiesService,
+            ProductRepository productRepository,
+            PoliciesRepository policiesRepository,
+            CustomerRepository customerRepository
+    ) {
+        this.policiesService = policiesService;
+        this.productRepository = productRepository;
+        this.policiesRepository = policiesRepository;
+        this.customerRepository = customerRepository;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public Map<String, Object> indexAction() {

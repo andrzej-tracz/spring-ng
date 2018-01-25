@@ -6,6 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -34,6 +35,9 @@ public class Product {
 
     @Setter @Getter
     private ArrayList<ProductVariant> variants = new ArrayList<>();
+
+    @DBRef @NotNull @Setter @Getter
+    private ProductCategory category;
 
     @Setter @Getter
     private Boolean isActive;

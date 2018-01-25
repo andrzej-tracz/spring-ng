@@ -16,6 +16,8 @@ import {NotificationService} from './notification.service';
 import {AuthModule} from './auth/auth.module';
 import {SharedModule} from './shared/shared.module';
 import {DashboardModule} from './dashboard/dashboard.module';
+import { ProductCategoriesModule } from './product-categories/product-categories.module';
+import { ProductCategoryService } from './product-categories/product-category.service';
 
 const routes: Routes = [
   {
@@ -62,7 +64,8 @@ const routes: Routes = [
     GuestGuard,
     AuthService,
     ApiService,
-    NotificationService
+    NotificationService,
+    ProductCategoryService
   ],
   bootstrap: [AppComponent]
 })

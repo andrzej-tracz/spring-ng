@@ -1,15 +1,16 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs/Subscription';
-import {Policy} from '../policy';
-import {ActivatedRoute, Router} from '@angular/router';
-import {PolicyService} from '../policy.service';
-import {NotificationService} from '../../notification.service';
-import {CustomerService} from '../../customers/customer.service';
-import {ProductService} from '../../products/product.service';
-import {Product} from '../../products/product';
-import {Customer} from '../../customers/customer';
-import {Observable} from 'rxjs/Observable';
-import {defaultDatepickerOptions} from '../../shared/shared.module';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
+import { Policy } from '../policy';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PolicyService } from '../policy.service';
+import { NotificationService } from '../../notification.service';
+import { CustomerService } from '../../customers/customer.service';
+import { ProductService } from '../../products/product.service';
+import { Product } from '../../products/product';
+import { Customer } from '../../customers/customer';
+import { Observable } from 'rxjs/Observable';
+import { defaultDatepickerOptions } from '../../shared/shared.module';
+import { ProductCategoryAttribute, ProductCategoryAttributeValue } from '../../product-categories/product-category';
 
 @Component({
   selector: 'app-policy-add-edit',
@@ -22,7 +23,7 @@ export class PolicyAddEditComponent implements OnInit, OnDestroy {
 
   private id: number = null;
 
-  datepickerOptions = defaultDatepickerOptions
+  datepickerOptions = defaultDatepickerOptions;
 
   policy: Policy;
   policy$: Subscription;
@@ -30,9 +31,9 @@ export class PolicyAddEditComponent implements OnInit, OnDestroy {
   customers: Customer[];
   products: Product[];
 
-  private productsList:Array<any> = [];
-  private productVariantsList:Array<any> = [];
-  private customerList:Array<any> = [];
+  private productsList: Array<any> = [];
+  private productVariantsList: Array<any> = [];
+  private customerList: Array<any> = [];
 
   data$: Subscription;
 
@@ -45,8 +46,7 @@ export class PolicyAddEditComponent implements OnInit, OnDestroy {
               private customerService: CustomerService,
               private productService: ProductService,
               private notification: NotificationService,
-              private router: Router
-  ) {
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -78,12 +78,16 @@ export class PolicyAddEditComponent implements OnInit, OnDestroy {
       this.products = response[0].content.map(item => {
         return new Product(item);
       });
-      this.productsList = this.products.map((item) => { return {id: item.id, text: item.name} });
+      this.productsList = this.products.map((item) => {
+        return { id: item.id, text: item.name }
+      });
 
       this.customers = response[1].content.map(item => {
         return new Customer(item);
       });
-      this.customerList = this.customers.map((item) => { return {id: item.id, text: item.getFullName()} });
+      this.customerList = this.customers.map((item) => {
+        return { id: item.id, text: item.getFullName() }
+      });
 
       this.isLoaded = true;
     });
@@ -91,7 +95,7 @@ export class PolicyAddEditComponent implements OnInit, OnDestroy {
 
   markPolicyAsClosed(policy: Policy) {
 
-    if (!confirm("Czy na pewno chcesz potwierdzić tę polisę?")) {
+    if (!confirm('Czy na pewno chcesz potwierdzić tę polisę?')) {
       return;
     }
 
@@ -129,6 +133,17 @@ export class PolicyAddEditComponent implements OnInit, OnDestroy {
     );
   }
 
+  handleAttributeValueChange(index: number, value: ProductCategoryAttributeValue, attribute: ProductCategoryAttribute) {
+    this.policy.assignedAttributes[index] = {
+      name: value.name,
+      label: attribute.name,
+      amount: value.amount,
+      shouldChangePrice: attribute.shouldChangePrice
+    };
+
+    this.policy.calculatePrice();
+  }
+
   onLoadSuccess(data) {
     this.policy = this.policies.parse(new Policy(data));
 
@@ -140,7 +155,7 @@ export class PolicyAddEditComponent implements OnInit, OnDestroy {
     });
 
     if (this.waitingForPdf && this.policy.hasFile) {
-      this.notification.clear().success("Polisa została wygenerowana");
+      this.notification.clear().success('Polisa została wygenerowana');
       this.waitingForPdf = false;
     }
   }
@@ -171,7 +186,7 @@ export class PolicyAddEditComponent implements OnInit, OnDestroy {
     return [];
   }
 
-  onProductSelected(item: any):void {
+  onProductSelected(item: any): void {
     let product = this.products.find(p => p.id == item.id);
 
     this.productVariantsList = product.variants.map(item => {
@@ -196,7 +211,7 @@ export class PolicyAddEditComponent implements OnInit, OnDestroy {
     return [];
   }
 
-  onCustomerSelected(item: any):void {
+  onCustomerSelected(item: any): void {
     this.policy.customer = this.customers.find(c => c.id == item.id);
   }
 
@@ -220,7 +235,7 @@ export class PolicyAddEditComponent implements OnInit, OnDestroy {
 
     subscription = this.policies.generateDocument(this.policy).subscribe(
       () => {
-        this.notification.clear().info("Polisa zostanie wygenerowana w ciągu kilku sekund");
+        this.notification.clear().info('Polisa zostanie wygenerowana w ciągu kilku sekund');
 
         this.waitingForPdf = true;
         setTimeout(() => {

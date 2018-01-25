@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -26,14 +27,15 @@ import static agency.services.AuthService.USER_REQUEST_KEY;
 @RequestMapping("/api/policy")
 public class PoliciesController extends AbstractController {
 
-    @Autowired
-    private PoliciesRepository policies;
+    private final PoliciesRepository policies;
+
+    private final PolicyService policyService;
 
     @Autowired
-    private CustomerRepository customers;
-
-    @Autowired
-    private PolicyService policyService;
+    public PoliciesController(PoliciesRepository policies, PolicyService policyService) {
+        this.policies = policies;
+        this.policyService = policyService;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public Page<Policy> index(@RequestParam(value = "page") int page) {
@@ -59,7 +61,7 @@ public class PoliciesController extends AbstractController {
 
         Policy policy = this.policies.findOne(id);
 
-        if (! policy.hasGeneratedFile()) {
+        if (!policy.hasGeneratedFile()) {
             throw new LogicException("File not exists");
         }
 
@@ -68,7 +70,7 @@ public class PoliciesController extends AbstractController {
             InputStream is = new FileInputStream(file);
 
             org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
-            response.setHeader("Content-Disposition", "attachment; filename=\""+ policy.getName() +".pdf\"");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + policy.getName() + ".pdf\"");
             response.flushBuffer();
 
         } catch (IOException ex) {
@@ -78,7 +80,7 @@ public class PoliciesController extends AbstractController {
 
 
     @RequestMapping(value = "/show", method = RequestMethod.GET)
-    public Policy show(@RequestParam(value="id") String id) {
+    public Policy show(@RequestParam(value = "id") String id) {
         return this.policies.findOne(id);
     }
 

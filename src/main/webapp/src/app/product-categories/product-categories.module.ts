@@ -4,7 +4,6 @@ import { AddEditComponent } from './add-edit/add-edit.component';
 import { ListComponent } from './list/list.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
-import { ProductCategoryService } from './product-category.service';
 
 @NgModule({
   imports: [
@@ -18,7 +17,7 @@ import { ProductCategoryService } from './product-category.service';
   ],
   declarations: [AddEditComponent, ListComponent],
   providers: [
-    ProductCategoryService
+    //
   ]
 })
 export class ProductCategoriesModule { }

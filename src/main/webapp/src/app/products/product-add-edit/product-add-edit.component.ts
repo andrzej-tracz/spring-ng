@@ -5,6 +5,8 @@ import {Product} from '../product';
 import {ProductService} from '../product.service';
 import {NotificationService} from '../../notification.service';
 import {ProductVariant} from '../product-variant';
+import { ProductCategory } from '../../product-categories/product-category';
+import { ProductCategoryService } from '../../product-categories/product-category.service';
 
 @Component({
   selector: 'app-product-add-edit',
@@ -20,10 +22,16 @@ export class ProductAddEditComponent implements OnInit {
   product: Product;
   product$: Subscription;
 
+  categories: ProductCategory[];
+  categoriesList: Array<{id: number, text:string}>;
+
+  categories$: Subscription;
+
   isLoaded = false;
 
   constructor(private route: ActivatedRoute,
               private productService: ProductService,
+              private productCategoryService: ProductCategoryService,
               private notification: NotificationService,
               private router: Router
   ) {
@@ -44,8 +52,34 @@ export class ProductAddEditComponent implements OnInit {
       }
 
     });
+
+    this.fetchProductCategories();
   }
 
+  fetchProductCategories() {
+    this.categories$ = this.productCategoryService.getProductCategories().subscribe(
+      (response) => {
+        this.categories = response.content.map((item) => new ProductCategory(item));
+        this.categoriesList = this.categories.map((item) => { return {id: item.id, text: item.name} });
+      }
+    )
+  }
+
+  getProductCategory() {
+    if (this.product && this.product.category) {
+      return [{
+        id: this.product.category.id,
+        text: this.product.category.name
+      }];
+    }
+
+    return [];
+  }
+
+
+  onCategorySelect(item: any) {
+    this.product.category = this.categories.find(c => c.id == item.id);
+  }
 
   fetchProduct(id) {
     return this.productService.getProduct(id).subscribe(

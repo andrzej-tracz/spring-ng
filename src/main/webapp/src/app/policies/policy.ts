@@ -3,9 +3,17 @@ import {Product} from '../products/product';
 import {User} from '../users/user';
 import {ProductVariant} from '../products/product-variant';
 import {DateModel} from 'ng2-datepicker';
+import { ProductCategoryAttributeValue } from '../product-categories/product-category';
 
 export const POLICY_STATUS_DRAFT = "DRAFT";
 export const POLICY_STATUS_CLOSED = "CLOSED";
+
+interface PolicyAttribute {
+  name: string;
+  label: string;
+  amount: number;
+  shouldChangePrice: boolean
+}
 
 export class Policy {
 
@@ -26,6 +34,8 @@ export class Policy {
 
   productVariant: ProductVariant = null;
 
+  price: number = 0;
+
   createdAt: Date;
   updatedAt: Date;
   closedAt: Date;
@@ -34,6 +44,8 @@ export class Policy {
   startsAtPicker: DateModel;
   endsAt: Date;
   endsAtPicker: DateModel;
+
+  assignedAttributes: PolicyAttribute[] = [];
 
   constructor(data) {
     Object.assign(this, data);
@@ -82,4 +94,18 @@ export class Policy {
     return this.status == POLICY_STATUS_CLOSED;
   }
 
+  calculatePrice() {
+    this.price = this.productVariant.price;
+
+    if (this.assignedAttributes.length) {
+      this.assignedAttributes.forEach(value => {
+
+        if (false == value.shouldChangePrice) {
+          return;
+        }
+
+        this.price = Math.round(this.price * (value.amount / 100) * 100) / 100;
+      });
+    }
+  }
 }

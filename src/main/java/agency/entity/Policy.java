@@ -12,11 +12,27 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 enum PolicyStatus {
     DRAFT,
     CLOSED
+}
+
+class PolicyAttribute {
+
+    @NotNull @Getter @Setter
+    private String name;
+
+    @NotNull @Getter @Setter
+    private String label;
+
+    @NotNull @Getter @Setter
+    private double amount;
+
+    @NotNull @Getter @Setter
+    private boolean shouldChangePrice;
 }
 
 @Document(collection = "policies")
@@ -58,6 +74,12 @@ public class Policy {
 
     @Setter @Getter @NotNull
     private ProductVariant productVariant;
+
+    @Setter @Getter
+    private ArrayList<PolicyAttribute> assignedAttributes = new ArrayList<>();
+
+    @NotNull @Setter @Getter
+    private double price;
 
     @Setter @Getter @NotNull
     private PolicyStatus status = PolicyStatus.DRAFT;

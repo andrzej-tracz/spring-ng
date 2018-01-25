@@ -9,6 +9,7 @@ import agency.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,14 +19,18 @@ import static agency.services.AuthService.USER_REQUEST_KEY;
 @RestController
 public class AuthController {
 
-    @Autowired
-    private AuthService userService;
+    private final AuthService userService;
 
-    @Autowired
-    private JWTService jwtService;
+    private final JWTService jwtService;
 
     @Value("${auth.jwt.header}")
     private String authHeader;
+
+    @Autowired
+    public AuthController(AuthService userService, JWTService jwtService) {
+        this.userService = userService;
+        this.jwtService = jwtService;
+    }
 
     @GetMapping(value = "/api/secure/hello/{name}")
     public Map helloPublic(@PathVariable String name, HttpServletRequest request) {
@@ -69,7 +74,7 @@ public class AuthController {
     public Map me(HttpServletRequest request) throws AccessDeniedException {
 
         if (null == this.userService.user(request)) {
-           throw new AccessDeniedException();
+            throw new AccessDeniedException();
         }
 
         Map<String, Object> response = new HashMap<>();

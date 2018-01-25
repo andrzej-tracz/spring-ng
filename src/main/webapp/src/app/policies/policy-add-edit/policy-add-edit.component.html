@@ -16,8 +16,12 @@
   <div class="row">
     <div class="column">
       <button class="button small" routerLink="/policies"><i class="fa fa-arrow-left"></i> Wróć</button>
-      <button *ngIf="policy.id && !policy.isClosed()" (click)="markPolicyAsClosed(policy)" class="button small"><i class="fa fa-check"></i> Zatwierdź Polisę</button>
-      <button *ngIf="policy.hasFile && policy.isClosed()" (click)="downloadPDF()" class="button small"><i class="fa fa-file-pdf-o"></i> Pobierz Polisę</button>
+      <button *ngIf="policy.id && !policy.isClosed()" (click)="markPolicyAsClosed(policy)" class="button small"><i
+        class="fa fa-check"></i> Zatwierdź Polisę
+      </button>
+      <button *ngIf="policy.hasFile && policy.isClosed()" (click)="downloadPDF()" class="button small"><i
+        class="fa fa-file-pdf-o"></i> Pobierz Polisę
+      </button>
       <button *ngIf="!policy.hasFile && policy.isClosed()" (click)="generateDocument()" class="button small">
         <span *ngIf="waitingForPdf">
            <i class="fa fa-spinner fa-spin"></i>
@@ -30,14 +34,14 @@
   </div>
 
   <div class="row form-wrapper" *ngIf="policy && customers && products">
-    <div class="small-12 medium-8 columns">
+    <div class="small-12 medium-8 columns policy-col _left">
       <div class="row">
         <div class="column">
           <div class="row">
             <div class="column">
-              <label class="help-text">
+              <h5>
                 Klient
-              </label>
+              </h5>
               <ng-select [allowClear]="true"
                          [disabled]="policy.isClosed()"
                          [items]="customerList"
@@ -54,9 +58,9 @@
         <div class="column">
           <div class="row">
             <div class="column">
-              <label class="help-text">
+              <h5>
                 Produkt
-              </label>
+              </h5>
               <ng-select [allowClear]="true"
                          [items]="productsList"
                          [disabled]="policy.isClosed()"
@@ -73,9 +77,9 @@
         <div class="column">
           <div class="row">
             <div class="column">
-              <label class="help-text">
+              <h5>
                 Wariant Produktu
-              </label>
+              </h5>
               <ng-select [allowClear]="true"
                          [items]="productVariantsList"
                          [disabled]="policy.isClosed()"
@@ -90,15 +94,36 @@
 
       <div *ngIf="policy.customer && policy.product && policy.productVariant">
 
+        <div *ngIf="policy?.product?.category && !policy.isClosed()">
+
+          <div class="row form-box" *ngFor="let attribute of policy.product.category.attributes; let i = index">
+            <div class="column">
+              <h5>{{ attribute.name }}</h5>
+              <div class="row attribute-values">
+                <div class="column small-12" *ngFor="let availableValue of attribute.availableValues">
+                  <label>
+                    <input type="radio" value="{{ availableValue.amount }}"
+                           [checked]="policy.assignedAttributes[i] && availableValue.name == policy.assignedAttributes[i].name"
+                           (change)="handleAttributeValueChange(i, availableValue, attribute)" name="{{ i }}"/>
+                    {{ availableValue.name }}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
         <div class="row">
           <div class="column large-4">
             <div class="row">
               <div class="column">
-                <label class="help-text">
+                <h5>
                   Ważna Od
-                </label>
+                </h5>
                 <div *ngIf="!policy.isClosed()">
-                  <ng2-datepicker required [options]="datepickerOptions" [(ngModel)]="policy.startsAtPicker"></ng2-datepicker>
+                  <ng2-datepicker required [options]="datepickerOptions"
+                                  [(ngModel)]="policy.startsAtPicker"></ng2-datepicker>
                 </div>
                 <div class="readonly-label" *ngIf="policy.isClosed()">
                   {{ policy.startsAt | date: 'dd-MM-yyyy' }}
@@ -109,11 +134,12 @@
           <div class="column large-4">
             <div class="row">
               <div class="column ">
-                <label class="help-text">
+                <h5>
                   Ważna Do
-                </label>
+                </h5>
                 <div *ngIf="!policy.isClosed()">
-                  <ng2-datepicker required [options]="datepickerOptions" [(ngModel)]="policy.endsAtPicker"></ng2-datepicker>
+                  <ng2-datepicker required [options]="datepickerOptions"
+                                  [(ngModel)]="policy.endsAtPicker"></ng2-datepicker>
                 </div>
                 <div class="readonly-label" *ngIf="policy.isClosed()">
                   {{ policy.endsAt | date: 'dd-MM-yyyy' }}
@@ -123,20 +149,20 @@
           </div>
         </div>
 
-        <div class="row">
+        <div class="row form-box">
           <div class="column">
             <div class="row">
               <div class="column">
                 <div *ngIf="!policy.isClosed()">
-                  <label class="help-text">
+                  <h5>
                     Wprowadź nazwę polisy
-                    <input [(ngModel)]="policy.name" type="text">
-                  </label>
+                  </h5>
+                  <input [(ngModel)]="policy.name" type="text">
                 </div>
                 <div *ngIf="policy.isClosed()">
-                  <label class="help-text">
+                  <h5>
                     Nazwa polisy
-                  </label>
+                  </h5>
                   <div class="readonly-label">{{ policy.name }}</div>
                 </div>
               </div>
@@ -144,20 +170,20 @@
           </div>
         </div>
 
-        <div class="row">
+        <div class="row form-box">
           <div class="column">
             <div class="row">
               <div class="column">
                 <div *ngIf="!policy.isClosed()">
-                  <label class="help-text">
+                  <h5>
                     Przedmiot ubezpieczenia
-                    <input [(ngModel)]="policy.subject" type="text">
-                  </label>
+                  </h5>
+                  <input [(ngModel)]="policy.subject" type="text">
                 </div>
                 <div *ngIf="policy.isClosed()">
-                  <label class="help-text">
+                  <h5>
                     Przedmiot ubezpieczenia
-                  </label>
+                  </h5>
                   <div class="readonly-label">{{ policy.subject }}</div>
                 </div>
               </div>
@@ -165,20 +191,20 @@
           </div>
         </div>
 
-        <div class="row" *ngIf="!policy.isClosed() || (policy.isClosed() && policy.subjectInfo)">
+        <div class="row form-box" *ngIf="!policy.isClosed() || (policy.isClosed() && policy.subjectInfo)">
           <div class="column">
             <div class="row">
               <div class="column">
                 <div *ngIf="!policy.isClosed()">
-                  <label class="help-text">
+                  <h5>
                     Przedmiot ubezpieczenia - dodatkowe informacje (opcjonalnie)
-                    <input [(ngModel)]="policy.subjectInfo" type="text">
-                  </label>
+                  </h5>
+                  <input [(ngModel)]="policy.subjectInfo" type="text">
                 </div>
                 <div *ngIf="policy.isClosed()">
-                  <label class="help-text">
+                  <h5>
                     Przedmiot ubezpieczenia - dodatkowe informacje
-                  </label>
+                  </h5>
                   <div class="readonly-label">{{ policy.subjectInfo }}</div>
                 </div>
               </div>
@@ -186,20 +212,20 @@
           </div>
         </div>
 
-        <div class="row" *ngIf="!policy.isClosed() || (policy.isClosed() && policy.subjectDetails)">
+        <div class="row form-box" *ngIf="!policy.isClosed() || (policy.isClosed() && policy.subjectDetails)">
           <div class="column">
             <div class="row">
               <div class="column">
                 <div *ngIf="!policy.isClosed()">
-                  <label class="help-text">
+                  <h5>
                     Przedmiot ubezpieczenie - Informacje szczegółowe (opcjonalnie)
-                    <textarea [(ngModel)]="policy.subjectDetails"></textarea>
-                  </label>
+                  </h5>
+                  <textarea [(ngModel)]="policy.subjectDetails"></textarea>
                 </div>
                 <div *ngIf="policy.isClosed()">
-                  <label class="help-text">
+                  <h5>
                     Przedmiot ubezpieczenia - Informacje szczegółowe
-                  </label>
+                  </h5>
                   <div class="readonly-label">{{ policy.subjectDetails }}</div>
                 </div>
               </div>
@@ -207,20 +233,20 @@
           </div>
         </div>
 
-        <div class="row">
+        <div class="row form-box">
           <div class="column">
             <div class="row">
               <div class="column">
                 <div *ngIf="!policy.isClosed()">
-                  <label class="help-text">
+                  <h5>
                     Informacje dodatkowe
-                    <textarea [(ngModel)]="policy.description"></textarea>
-                  </label>
+                  </h5>
+                  <textarea [(ngModel)]="policy.description"></textarea>
                 </div>
                 <div *ngIf="policy.isClosed()">
-                  <label class="help-text">
+                  <h5>
                     Opis
-                  </label>
+                  </h5>
                   <div class="readonly-label">{{ policy.description }}</div>
                 </div>
               </div>
@@ -238,7 +264,44 @@
         </div>
 
       </div>
-
     </div>
+
+    <div class="small-12 medium-4 columns policy-col _right">
+      <div class="row" *ngIf="policy.price">
+        <div class="column">
+          <h2>Podsumowanie</h2>
+          <div class="row _variant">
+            <div class="column">Wariant</div>
+            <div class="column">{{ policy.productVariant.price | currency:'PLN' }}</div>
+          </div>
+          <div class="row" *ngFor="let attribute of policy.assignedAttributes">
+            <div class="column">
+              <h5>{{ attribute.label }}</h5>
+              <div class="row">
+                <div class="column">{{ attribute.name }}</div>
+                <div class="column" *ngIf="attribute.shouldChangePrice"> x{{ attribute.amount }}%</div>
+              </div>
+            </div>
+          </div>
+          <div class="row _total-amount">
+            <div class="column _total-label">
+              W sumie:
+            </div>
+            <div class="column _total-value">
+              {{ policy.price | currency: 'PLN' }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="columns text-right">
+              <button *ngIf="!policy.isClosed()" class="button small" (click)="savePolicy()">
+                <span *ngIf="policy.id"><i class="fa fa-save"></i> Zapisz</span>
+                <span *ngIf="!policy.id"><i class="fa fa-database"></i> Dodaj</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>

@@ -20,8 +20,12 @@ import java.util.Map;
 @RequestMapping("/api/customer")
 public class CustomerController extends AbstractController {
 
+    private final CustomerRepository customers;
+
     @Autowired
-    private CustomerRepository customers;
+    public CustomerController(CustomerRepository customers) {
+        this.customers = customers;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public Page<Customer> index(@RequestParam(value = "page") int page) {

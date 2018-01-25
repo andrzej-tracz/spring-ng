@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { ProductAddEditComponent } from './product-add-edit/product-add-edit.component';
 import { ProductService } from './product.service';
 import { SharedModule } from '../shared/shared.module';
+import { ProductCategoryService } from '../product-categories/product-category.service';
 
 @NgModule({
   imports: [

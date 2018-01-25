@@ -7,6 +7,7 @@ import agency.repositories.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.List;
 
@@ -14,8 +15,12 @@ import java.util.List;
 @RequestMapping("/api/owner")
 public class OwnerController extends AbstractController {
 
+    private final OwnerRepository owners;
+
     @Autowired
-    private OwnerRepository owners;
+    public OwnerController(OwnerRepository owners) {
+        this.owners = owners;
+    }
 
     @RequestMapping(value = "/show", method = RequestMethod.GET)
     public Owner show() {
@@ -39,7 +44,7 @@ public class OwnerController extends AbstractController {
 
         List<Owner> all = this.owners.findAll();
 
-        if(all.size() > 0) {
+        if (all.size() > 0) {
             return all.get(0);
         }
 
