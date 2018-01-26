@@ -211,13 +211,29 @@
             </tr>
             <tr>
                 <td>
-                    Płatność
+                    Wariant
                 </td>
                 <td>
                     {{ policy.getProductVariant().getName() }}
                     {{ policy.getProductVariant().getPrice() }}
                 </td>
             </tr>
+            {% for attribute in policy.getAssignedAttributes() %}
+            <tr>
+                <td>
+                    {{ attribute.getLabel() }}
+                </td>
+                <td>
+                    {{ attribute.getName() }}
+                </td>
+            </tr>
+            {% endfor %}
+
+            <tr>
+                <td>W sumie:</td>
+                <td>{{  policy.getPrice() }}</td>
+            </tr>
+
         </table>
     </section>
 
